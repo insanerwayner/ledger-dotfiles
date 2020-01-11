@@ -1,0 +1,23 @@
+#!/bin/bash
+firstpay=$(date -d 2019-12-27 +%s)
+today=$(date +%s)
+depth=$1
+if [ -z "$1" ]
+then
+    depth=1
+else
+    depth=$1
+fi
+count=0
+while [ "$count" -lt "$depth" ]
+do 
+    while [ "$today" -ge "$firstpay" ]
+    do
+        oldpay=$(date -d "@$firstpay" +"%Y-%m-%d")
+        firstpay=$(date -d "$oldpay +2 weeks" +%s)
+    done
+    (( count++ ))
+    payday=$(date -d @"$firstpay"  +"%Y-%m-%d")
+    today=$firstpay
+done
+echo "$payday"
