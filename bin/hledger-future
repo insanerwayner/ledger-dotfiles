@@ -1,9 +1,9 @@
 #!/bin/bash
 echo "Current Balances:"
 echo ""
-hledger bal Assets:BofTX --flat -R
+hledger bal Assets:BofTX --flat $@
 echo ""
-hledger -f ~/ledger/master.ledger -f ~/ledger/budget.ledger bal Assets:BofTX --forecast -p "every 14 days from $(hledger-payday) to $(hledger-payday 8)" -H -R
+hledger -f ~/ledger/master.ledger -f ~/ledger/budget.ledger bal Assets:BofTX --forecast -p "every 14 days from $(hledger-payday) to $(hledger-payday 8)" -H $@
 echo ""
-hledger -f ~/ledger/master.ledger -f ~/ledger/budget.ledger bal Assets:BofTX --forecast -p "every 14 days from $(hledger-payday 8) to $(hledger-payday 15)" -H -R
+hledger -f ~/ledger/master.ledger -f ~/ledger/budget.ledger bal Assets:BofTX --forecast -p "every 14 days from $(hledger-payday 8) to $(hledger-payday 15)" -H $@
 echo ""
