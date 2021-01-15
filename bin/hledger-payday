@@ -18,4 +18,16 @@ do
     payday=$(date -d @"$firstpay"  +"%Y-%m-%d")
     today=$firstpay
 done
-echo "$payday"
+if [ -z "$2" ]
+then
+   echo "$payday"
+elif [ "$2" -eq -1 ]
+then
+    payday=$(date -d "$payday" +%s)
+    nextpay=$(date -d "@$payday" +"%Y-%m-%d")
+    payday=$(date -d "$nextpay -2 weeks" +"%Y-%m-%d")
+    echo "$payday"
+else
+    echo "invalid arguement:" "$2"
+fi
+
