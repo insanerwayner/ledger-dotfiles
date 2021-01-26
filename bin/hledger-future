@@ -5,7 +5,7 @@ function futuretotals()
     eofpp=$(date -d "$(hledger-payday) -1 days" +"%Y-%m-%d")
     printf "End of Pay Period (%s):\n\n" "$eofpp"
     hledger bal Assets:BofTX --flat --pretty-tables --auto "$@" 
-    hledger -f ~/ledger/master.ledger -f ~/ledger/budget.ledger bal Assets:BofTX --forecast -p "every 14 days from $(hledger-payday) to $(hledger-payday 15)" -H --pretty-tables --transpose "$@"
+    hledger -f ~/ledger/master.ledger print -R | hledger -f - -f ~/ledger/budget.ledger bal Assets:BofTX --forecast -p "every 14 days from $(hledger-payday) to $(hledger-payday 16)" -H --pretty-tables --transpose "$@"
     }
 
 printf "\n%s\n\n" "$(futuretotals "$@" |  sed '/Ending/d; s/--/──/g')" 
