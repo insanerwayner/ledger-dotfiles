@@ -1,0 +1,29 @@
+#!/bin/bash
+tags=(paycheck bill savings autopay payperiod)
+date=$(date "+%Y-%m-%d")
+
+function get_trans()
+    {
+    tag=$1
+    hledger -f ~/ledger/budget.ledger print --forecast -e "$(hledger-payday)" tag:"$tag"
+    }
+
+for tag in "${tags[@]}"
+do
+    case "$tag" in
+
+        paycheck | bill | savings)
+            get_trans "$tag" | sed 's/[0-9][0-9][0-9][0-9]\-[0-9][0-9]\-[0-9][0-9]/'"$date"'/g' >> ~/ledger/register.ledger
+            ;;
+        
+        autopay)
+            get_trans "$tag" >> ~/ledger/register.ledger
+            ;;
+
+        payperiod)
+            get_trans "$tag" > ~/ledger/payday.ledger
+            ;;
+
+    esac
+            
+done && vim +LedgerSort +?paycheck register.ledger
