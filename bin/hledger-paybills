@@ -27,4 +27,4 @@ do
 
     esac
 
-done && vim +LedgerSort +?paycheck register.ledger
+done && vim +LedgerSort -c ?paycheck -c "norm j" -c "/USD" -c "norm N3b" -c ":noh" register.ledger
