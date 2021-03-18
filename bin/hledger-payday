@@ -1,5 +1,5 @@
-#!/bin/bash
-firstpay=$(date -d 2019-12-27 +%s)
+#!/bin/sh
+firstpay=$(date -d 2021-03-05 +%s)
 today=$(date +%s)
 depth=$1
 if [ -z "$1" ]
@@ -14,7 +14,7 @@ do
         oldpay=$(date -d "@$firstpay" +"%Y-%m-%d")
         firstpay=$(date -d "$oldpay +2 weeks" +%s)
     done
-    (( count++ ))
+    count=$(( count + 1 ))
     payday=$(date -d @"$firstpay"  +"%Y-%m-%d")
     today=$firstpay
 done
