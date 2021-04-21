@@ -1,6 +1,6 @@
 #!/bin/sh
 
-function futuretotals()
+futuretotals()
     {
     eofpp=$(date -d "$(hledger-payday) -1 days" +"%Y-%m-%d")
     printf "End of Pay Period (%s):\n\n" "$eofpp"
