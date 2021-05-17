@@ -40,7 +40,7 @@ total=$(bc -l <<< "$ledgbal-$bankbal")
 (( $( bc -l <<< "$total < 0") )) && echo "Enter bank balance" && exit
 printf  "Total Diff: %s USD \n\n" "$total"
 export total
-IFS=$'\n'; for amount in $(hledger print checking -P | hledger -f - reg -P not:checking amt:"<=0$total" -O csv | awk -F, '{gsub(/ USD/, ""); if (NR!=1) {print $2","$4","$5","$(NF-1)}}')
+IFS=$'\n'; for amount in $(hledger print checking -P -p "until today" | hledger -f - reg -P not:checking amt:"<=0$total" -O csv -p "until today" | awk -F, '{gsub(/ USD/, ""); if (NR!=1) {print $2","$4","$5","$(NF-1)}}')
 do
     amounts+=("$amount")
 done
