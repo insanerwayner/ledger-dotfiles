@@ -16,22 +16,22 @@ do
 
         savings | bill)
             # change date to today; leave transaction unmarked
-            get_trans "$tag" 1 | sed 's/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/'"$today"'/g' >> ~/ledger/register.ledger
+            get_trans "$tag" 1 | sed 's/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/'"$today"'/g;/generated-transaction/d' >> ~/ledger/register.ledger
             ;;
         
         paycheck )
             # keep date intact; mark transaction cleared
-            get_trans "$tag" 1 | sed 's/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/& */g' >> ~/ledger/register.ledger
+            get_trans "$tag" 1 | sed 's/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/& */g;/generated-transaction/d' >> ~/ledger/register.ledger
             ;;
             
         autopay )
             # keep date intact; mark transaction pending
-            get_trans "$tag" 1 | sed 's/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/& !/g' >> ~/ledger/register.ledger
+            get_trans "$tag" 1 | sed 's/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/& !/g;/generated-transaction/d' >> ~/ledger/register.ledger
             ;;
 
         payperiod)
             # keep date intact; mark transaction cleared
-            get_trans "$tag"  2 | sed 's/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/& */g' > ~/ledger/payday.ledger
+            get_trans "$tag"  2 | sed 's/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/& */g;/generated-transaction/d' > ~/ledger/payday.ledger
             ;;
 
     esac
