@@ -1,33 +1,24 @@
 #!/bin/sh
-firstpay=$(date -d 2021-03-05 +%s)
-today=$(date +%s)
 depth=$1
 if [ -z "$1" ]
 then
-    depth=1
-fi
-count=0
-while [ "$count" -lt "$depth" ]
-do 
-    while [ "$today" -ge "$firstpay" ]
-    do
-        oldpay=$(date -d "@$firstpay" +"%Y-%m-%d")
-        firstpay=$(date -d "$oldpay +2 weeks" +%s)
-    done
-    count=$(( count + 1 ))
-    payday=$(date -d @"$firstpay"  +"%Y-%m-%d")
-    today=$firstpay
-done
-if [ -z "$2" ]
-then
-   echo "$payday"
-elif [ "$2" -eq -1 ]
-then
-    payday=$(date -d "$payday" +%s)
-    nextpay=$(date -d "@$payday" +"%Y-%m-%d")
-    payday=$(date -d "$nextpay -2 weeks" +"%Y-%m-%d")
-    echo "$payday"
-else
-    echo "invalid arguement:" "$2"
+    depth=0
 fi
 
+weeknumber=$(date +%W)
+
+if [ $(( weeknumber % 2 )) -eq 0 ]
+then
+    payday=$(date -d "Friday + 1 week" +%Y-%m-%d)
+else
+    payday=$(date -d "Friday" +%Y-%m-%d)
+fi
+
+if [ "$depth" = 0 ]
+then
+    echo "$payday"
+else
+    depth=$(echo "$depth*2" | bc -l)
+    payday=$(date -d "$payday +$depth weeks" +%Y-%m-%d)
+    echo "$payday"
+fi
