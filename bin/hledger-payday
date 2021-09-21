@@ -1,8 +1,9 @@
 #!/bin/sh
-depth=$1
 if [ -z "$1" ]
 then
     depth=0
+else
+    depth=$1
 fi
 
 weeknumber=$(date +%W)
@@ -10,6 +11,12 @@ weeknumber=$(date +%W)
 if [ $(( weeknumber % 2 )) -eq 0 ]
 then
     payday=$(date -d "Friday + 1 week" +%Y-%m-%d)
+elif [ "$(date +%A)" = "Friday" ]
+then
+    if [ "$depth" -ge 0 ]
+    then
+        depth=$(echo "$depth+1" | bc -l)
+    fi
 else
     payday=$(date -d "Friday" +%Y-%m-%d)
 fi
