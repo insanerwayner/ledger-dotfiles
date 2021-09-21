@@ -13,7 +13,7 @@ then
     payday=$(date -d "Friday + 1 week" +%Y-%m-%d)
 elif [ "$(date +%A)" = "Friday" ]
 then
-    depth=$(echo "$depth+1" | bc -l)
+    depth=$(echo "$depth+1" | bc)
     payday=$(date +%Y-%m-%d)
 else
     payday=$(date -d "Friday" +%Y-%m-%d)
@@ -23,7 +23,7 @@ if [ "$depth" = 0 ]
 then
     echo "$payday"
 else
-    depth=$(echo "$depth*2" | bc -l)
+    depth=$(echo "$depth*2" | bc)
     payday=$(date -d "$payday +$depth weeks" +%Y-%m-%d)
     echo "$payday"
 fi
