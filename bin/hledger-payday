@@ -1,14 +1,12 @@
 #!/bin/sh
-if [ -z "$1" ]
-then
-    depth=0
-else
-    depth=$1
-fi
+case "$1" in
+    "" ) depth=0
+        ;;
+    * ) depth=$1
+        ;;
+esac
 
-weeknumber=$(date +%W)
-
-if [ $(( weeknumber % 2 )) -eq 0 ]
+if [ $(( $(date +%W) % 2 )) -eq 0 ]
 then
     payday=$(date -d "Friday + 1 week" +%Y-%m-%d)
 elif [ "$(date +%A)" = "Friday" ]
