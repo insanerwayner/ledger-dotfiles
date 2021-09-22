@@ -8,20 +8,18 @@ esac
 
 if [ $(( $(date +%W) % 2 )) -eq 0 ]
 then
-    payday=$(date -d "Friday + 1 week" +%Y-%m-%d)
+    payday=$(date -d "Friday + 1 week" +%F)
 elif [ "$(date +%A)" = "Friday" ]
 then
     depth=$(echo "$depth+1" | bc)
-    payday=$(date +%Y-%m-%d)
+    payday=$(date +%F)
 else
-    payday=$(date -d "Friday" +%Y-%m-%d)
+    payday=$(date -d "Friday" +%F)
 fi
 
-if [ "$depth" = 0 ]
+if [ "$depth" != 0 ]
 then
-    echo "$payday"
-else
     depth=$(echo "$depth*2" | bc)
-    payday=$(date -d "$payday +$depth weeks" +%Y-%m-%d)
-    echo "$payday"
+    payday=$(date -d "$payday +$depth weeks" +%F)
 fi
+echo "$payday"
