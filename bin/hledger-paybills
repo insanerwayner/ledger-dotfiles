@@ -5,8 +5,7 @@ today=$(date "+%Y-%m-%d")
 function get_trans()
     {
     tag=$1
-    enddate=$(date -d "$(hledger-payday)+1 days" +%Y-%m-%d)
-    hledger -f ~/ledger/budget.ledger print --forecast -e "$enddate" tag:"$tag"
+    hledger -f ~/ledger/budget.ledger print --forecast="until $(hledger-payday)" tag:"$tag"
     }
 
 for tag in "${tags[@]}"
