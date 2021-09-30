@@ -92,4 +92,9 @@ function get_pattern()
     fi
     }
 export -f get_pattern
-seq "$((2#$ones))" | parallel get_pattern {} "${amounts[*]}" 
+if [ "$ones" ]
+then
+    seq "$((2#$ones))" | parallel get_pattern {} "${amounts[*]}" 
+else
+    printf "%s\n" "${red}No matching transactions"
+fi
