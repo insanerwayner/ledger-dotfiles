@@ -10,7 +10,7 @@ case "${1#[-+]}" in
         ;;
 esac
 
-if [ $(( $(date +%W) % 2 )) -eq 0 ]
+if [ $(( $(date +%-W) % 2 )) -eq 0 ]
 then
     payday=$(date -d "Friday + 1 week" +%F)
 elif [ "$(date +%A)" = "Friday" ]
