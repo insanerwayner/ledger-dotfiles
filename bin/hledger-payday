@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 case "${1#[-+]}" in
     "" ) depth=0
         ;;
@@ -10,13 +10,14 @@ case "${1#[-+]}" in
         ;;
 esac
 
-if [ $(( $(date +%-W) % 2 )) -eq 0 ]
+if [ $(( $(date +%-U) % 2 )) -eq 1 ]
 then
-    payday=$(date -d "Friday + 1 week" +%F)
-elif [ "$(date +%A)" = "Friday" ]
-then
-    depth=$(echo "$depth+1" | bc)
-    payday=$(date +%F)
+    if [ "$(date +%w)" -ge 5  ]
+    then
+        payday=$(date -d "next Friday + 1 week" +%F)
+    else
+        payday=$(date -d "Friday" +%F)
+    fi
 else
     payday=$(date -d "Friday" +%F)
 fi
