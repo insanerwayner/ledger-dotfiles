@@ -9,17 +9,19 @@ case "${1#[-+]}" in
     * ) depth=$1
         ;;
 esac
-
-if [ $(( $(date +%-U) % 2 )) -eq 1 ]
+week=$(date +%-W)
+day=$(date +%u)
+if [ $(( week % 2 )) -eq 1 ]
 then
-    if [ "$(date +%w)" -ge 5  ]
+    if [ "$day" -ge 5  ]
     then
         payday=$(date -d "next Friday + 1 week" +%F)
     else
         payday=$(date -d "Friday" +%F)
     fi
 else
-    payday=$(date -d "Friday" +%F)
+    daysahead=$((-day+12))
+    payday=$(date -d "+ $daysahead days" +%F)
 fi
 
 if [ "$depth" != 0 ]
