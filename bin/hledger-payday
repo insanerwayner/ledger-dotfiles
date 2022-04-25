@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 case "${1#[-+]}" in
     "" ) depth=0
         ;;
@@ -26,7 +26,7 @@ fi
 
 if [ "$depth" != 0 ]
 then
-    depth=$(echo "$depth*2" | bc)
+    depth=$((depth*2))
     payday=$(date -d "$payday +$depth weeks" +%F)
 fi
 echo "$payday"
